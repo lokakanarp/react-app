@@ -3,7 +3,8 @@ import { StyleSheet, Text, View } from "react-native";
 
 export default function Movie (props) {
   return (<View style={styles.movie}>
-          <Text>hallå {props.item.name}</Text>
+          <Text>{props.item.title}</Text>
+          <Text>{props.item.release_date}</Text>
         </View>)
 }
 const styles = StyleSheet.create({

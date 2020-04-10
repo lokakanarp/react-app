@@ -1,16 +1,11 @@
-import React from 'react';
-import { StyleSheet, Text, View, ScrollView } from 'react-native';
-import Movie from './components/Movie'
-
-
-//
-// const Item = (props) => {
-//   return (<View style={styles.item}>
-//           <Text>hallå {props.item.name}</Text>
-//         </View>)
-// }
+import React, {useEffect, useState} from 'react';
+import { StyleSheet, Text, View, ScrollView, ActivityIndicator } from 'react-native';
+import Movie from './components/Movie';
 
 export default function App() {
+
+  const [isLoading, setLoading] = useState(true);
+  const [data, setData] = useState([]);
 
   let shop = [
     {id: 35, name: 'jumper', color: 'red', price: 20},
@@ -20,10 +15,18 @@ export default function App() {
     {id: 72, name: 'socks', color: 'white', price: 5},
   ]
 
+  useEffect(() => {
+    fetch('https://ghibliapi.herokuapp.com/films/')
+    .then((response) => response.json())
+    .then((json) => setData(json))
+    .catch((error) => console.error(error))
+    .finally(() => setLoading(false));
+  });
+
   return (
     <ScrollView style={styles.container}>
       <Text>Lokas fina app!</Text>
-        {shop.map((item, key) =>
+        {data.map((item, key) =>
           <Movie item={item} key={item.id}/>
         )}
     </ScrollView>
