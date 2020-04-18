@@ -1,11 +1,13 @@
 import React, {useEffect, useState} from 'react';
 import { StyleSheet, Text, View, ScrollView, ActivityIndicator, StatusBar } from 'react-native';
 import Movie from './components/Movie';
+import Header from './components/Header';
 
 export default function App() {
 
   const [isLoading, setLoading] = useState(true);
   const [data, setData] = useState([]);
+  const headerTitle = "hallå"
 
   useEffect(() => {
     fetch('https://ghibliapi.herokuapp.com/films/')
@@ -16,13 +18,14 @@ export default function App() {
   });
 
   return (
-    <ScrollView style={styles.container}>
-      <Text>Lokas fina app!</Text>
+      <ScrollView style={styles.container}>
+        <StatusBar backgroundColor="red" />
+        <Header title={headerTitle} />
         {isLoading ? <ActivityIndicator/> : (
           data.map((item, key) =>
           <Movie item={item} key={item.id}/>
         ))}
-    </ScrollView>
+      </ScrollView>
   );
 }
 
